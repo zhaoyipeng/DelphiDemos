@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="汽车召回,汽车投诉,汽车质量投诉,汽车答疑,汽车召回公告,汽车安全">
+<script src="/static/js/jquery.min.js" type="text/javascript"></script>
+<!-- <script src="/qiche365/static/js/jquery.min.js" type="text/javascript"></script> -->
+<script src="/static/js/checkInfo.js" type="text/javascript"></script>
+<!-- <script src="/qiche365/static/js/checkInfo.js" type="text/javascript"></script> -->
+<script type="text/javascript" src="/static/js/dialog/jquery.artDialog.js?skin=blue"></script>
+<!-- <script type="text/javascript" src="/qiche365/static/js/dialog/jquery.artDialog.js?skin=opera"></script> -->
+<script type="text/javascript" src="/static/js/dialog/plugins/iframeTools.js"></script>
+<!-- <script type="text/javascript" src="/qiche365/static/js/dialog/plugins/iframeTools.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/qiche365/static/css/index.css" /> -->
+<title>召回公报_汽车召回网</title>
+</head>
+<body>
+<!--[if IE6]>top<![endif]-->
+<div class="ina_top">
+<div class="ina_top_nr">
+<div class="ina_top_left" id="user_info">
+<input type="radio" name="user_type" class="ina_radio" value="user" checked><label class="ina_radio1">车主</label>
+<input type="radio" name="user_type" class="ina_radio" value="brank"><label class="ina_radio1">厂商</label>
+<input type="radio" name="user_type" class="ina_radio" value="expert"><label class="ina_radio1">专家</label>
+<label>用户名：</label><input type="text" class="ina_text" name="user_name">
+<label>密码：</label><input type="password" class="ina_text" name="user_pwd">
+<a onclick="check_user()" class="ina_denglu">登&nbsp;陆</a>
+<a href="/register/agreement.html" class="ina_zhuce">注&nbsp;册</a>
+</div>
+<div class="ina_top_right">
+<a href="#">中文</a>|<a href="#">English</a>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+	var stata = false;
+	$.get('/index.php?m=all&c=index&a=check_login',function(data){
+			var dat=trim(data);
+				dat=eval('('+dat+')');
+				if(dat.ok){
+					var div=document.getElementById('user_info');
+					if(dat.type=='用户'){
+						div.innerHTML='<label>欢迎 '+dat.userid+' '+dat.type+'</label> <a href="/index.php?m=news_index&c=index&a=news_index" class="ina_denglu">用户中心</a><a href="javascript:logout();void(0);" class="ina_zhuce">退&nbsp;出</a>';
+						$('.expert').attr('href','/expert_login/index.html');
+					}else if(dat.type=='专家'){
+						window.location='/index.php?m=news_index&c=index&a=news_index';
+					}else if(dat.type=='厂商'){
+						window.location='/index.php?m=news_index&c=index&a=news_index';
+					}
+					stata = true;
+				}else{
+					$('.expert').attr('href','/expert_login/index.html');
+				}
+	
+	});
+	function check_user(){
+		var types = document.getElementsByName('user_type');
+		for(var i=0;i<3;i++){
+			if(types[i].checked){
+				var type = types[i].value;
+			}
+		}
+		var name = document.getElementsByName('user_name')[0].value;
+		var pwd = document.getElementsByName('user_pwd')[0].value;
+		if(!trim(name)){
+			alert('用户名不能为空');
+		}else{
+			if(!trim(pwd)){
+				alert('请输入密码')
+			}else{
+				$.ajax({
+					type:'post',
+					url:'/index.php?m=all&c=index&a=userinfo',
+					data:'type='+type+'&uname='+name+'&upwd='+pwd,
+					success:function(date){
+						var div=document.getElementById('user_info');
+						var dat=trim(date);
+							dat=eval('('+dat+')');
+						if(dat.ok){
+							var div=document.getElementById('user_info');
+							if(dat.type=='用户'){
+								div.innerHTML='<label>欢迎 '+dat.userid+' '+dat.type+'</label> <a href="/index.php?m=news_index&c=index&a=news_index" class="ina_denglu">用户中心</a><a href="javascript:logout();void(0);" class="ina_zhuce">退&nbsp;出</a>';
+								$('.expert').attr('href','/expert_login/index.html');
+							}else if(dat.type=='专家'){
+								window.location='/index.php?m=news_index&c=index&a=news_index';
+							}else if(dat.type=='厂商'){
+								window.location='/index.php?m=news_index&c=index&a=news_index';
+							}
+							stata = true;
+						}else if(date==1){
+							div.innerHTML='<label><font color="red">登录失败：用户不存在或选择的用户组错误</font></label> <a href="javascript:re_logoin()" class="ina_denglu">重新登录</a>';
+						}else if(date==2){
+							div.innerHTML='<label><font color="red">登录失败：密码错误</font></label> <a href="javascript:re_logoin()" class="ina_denglu">重新登录</a> <a href="/password/password_serve.html" class="ina_denglu">找回密码</a>';
+						}else if(date==3){
+							div.innerHTML='<label><font color="green">用户已注册，请登录邮箱完成注册确认后登录</font></label> <a href="javascript:re_logoin()" class="ina_denglu">使用其它账号</a>';
+						}else if(date==4){
+							div.innerHTML='<label><font color="red">登录失败：用户已被锁定</font></label> <a href="javascript:re_logoin()" class="ina_denglu">使用其它账号</a>';
+						}
+					}
+				});
+			}
+		}
+	}
+	function re_logoin(){
+		var div=document.getElementById('user_info');
+		div.innerHTML='<input type="radio" name="user_type" class="ina_radio" value="user" checked><label class="ina_radio1">车主</label><input type="radio" name="user_type" class="ina_radio" value="brank"><label class="ina_radio1">厂商</label><input type="radio" name="user_type" class="ina_radio" value="expert"><label class="ina_radio1">专家</label><label>用户名：</label><input type="text" class="ina_text" name="user_name"><label>密码：</label><input type="password" class="ina_text" name="user_pwd"><a onclick="check_user()" class="ina_denglu">登&nbsp;陆</a><a href="" class="ina_zhuce">注&nbsp;册</a>';
+	}
+	
+	function logout(){
+		$.ajax({
+			type:'post',
+			url:'/index.php?m=all&c=index&a=logout',
+			data:'data=out',
+			success:function(){
+					var div=document.getElementById('user_info');
+					div.innerHTML='<input type="radio" name="user_type" class="ina_radio" value="user" checked><label class="ina_radio1">车主</label><input type="radio" name="user_type" class="ina_radio" value="brank"><label class="ina_radio1">厂商</label><input type="radio" name="user_type" class="ina_radio" value="expert"><label class="ina_radio1">专家</label><label>用户名：</label><input type="text" class="ina_text" name="user_name"><label>密码：</label><input type="password" class="ina_text" name="user_pwd"><a onclick="check_user()" class="ina_denglu">登&nbsp;陆</a><a href="" class="ina_zhuce">注&nbsp;册</a>';
+					stata = false;
+			}
+		})
+	}
+</script>
+
+
+<!--[if IE6]>top结束<![endif]-->
+<!--[if IE6]>head<![endif]-->
+<div class="ina_head">
+<div class="ina_logo"><img src="/static/image/pic/logo.jpg"></div>
+<!-- <div class="ina_logo"><img src="/qiche365/static/image/pic/logo1.jpg"></div> -->
+<div class="ina_head_right">
+<div class="ina_head_right_l">
+<p><label>投诉电话：</label><span>010-65537365</span></p>
+<a href="/complain/complain.html" class="ina_icon ina_jinru"></a>
+</div>
+<div class="ina_head_right_r">
+<ul>
+<li>电子邮箱：zhaohui@qiche365.org.cn</li>
+<li>投诉传真：010-65527365</li>
+<li>信函地址：北京市东城区新中西街2号新中大厦西门10层</li>
+</ul>
+</div>
+</div>
+</div>
+<!--[if IE6]>head结束<![endif]-->
+<!--[if IE6]>导航<![endif]-->
+<div class="ina_icon ina_daohang">
+<a href="/index.html" class="ina_a" id="dao_hang_index">首页</a>|<a href="/complain/complain.html" class="ina_a" id="dao_hang_complain">质量投诉</a>|<a href="/question/question.html" class="ina_a" id="dao_hang_question">专家答疑</a>|<a href="/index.php?m=all&c=index&a=auto_know&column_id=21" class="ina_a" id="dao_hang_call">召回知识</a>|<a href="/news/index.html" class="ina_a" id="dao_hang_news">新闻中心</a>|<a href="/index.php?m=all&c=index&a=recall_list" class="ina_a" id="dao_hang_recall">召回公报</a>|<a href="/index.php?m=all&c=index&a=auto_know&column_id=12" class="ina_a" id="dao_hang_auto">汽车知识</a>|<a href="/special_topic_s/sanbao_index.html" class="ina_a" id="dao_hang_san">汽车三包</a>|<a href="/expert_login/index.html" class="ina_a expert" id="dao_hang_expert">专家平台</a>
+</div>
+<!--[if IE6]>head结束<![endif]-->
+<!--[if IE6]>导航<![endif]-->
+<!--[if IE6]>导航结束<![endif]-->
+<div class="ina_silde">
+<div class="ina_silde_left1_vin">
+<!--[if IE6]>VIN查询<![endif]-->
+	
+<style>
+body{_background-attachment: fixed; _background-image: url(about:blank);}
+.ina_bgobj_a{position:fixed;top:0px;_position:absolute;_top: expression(documentElement.scrollTop + 0 + "px");}
+</style>
+<div class="ina_silde_vin">
+<div class="ina_icon ina_bt"><h3>VIN查询</h3></div>
+<div class="ina_vin">VIN查看您的爱车是否在召回范围之内</div>
+<div class="ina_vin_cx">
+<div class="ina_icon ina_left"></div>
+<div class="ina_right">
+<span>按VIN码查询</span>
+<span><input type="text" value="" maxlength="17" id="vins" onkeyup="tanqi(event)"><p id="gagaga" style="float: left; padding-left: 10px; line-height: 33px;">vin码长度为<font color="red">17</font></p></span>
+<!-- onkeydown="del(event)" -->
+<span><button class="ina_cx" onclick="chaxun()" style="cursor:pointer;">查&nbsp;询</button></span>
+</div>
+</div>
+<div class="ina_vin_bottom">
+<h3>进入新闻中心</h3>
+<dl>
+<dt><img src="./static/image/pic/ina_news.jpg"></dt>
+<dd><span>&middot;</span><a href="/special_topic_s/index.html">儿童座椅</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=9">国内召回新闻</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=10">国外召回新闻</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=11">汽车行业新闻</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=12">汽车知识</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=13">法律法规</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=15">工作动态</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/index.php?m=all&c=index&a=auto_know&column_id=16">热点调查</a></dd>
+<dd  name="dls"><span>&middot;</span><a href="/special_topic_s/sanbao_index.html">汽车三包</a></dd>
+</dl>
+</div>
+</div>
+
+<script src="/static/js/vin_search.js"></script>
+<script>
+		 function zhi_kong_s(){
+	 	if(document.getElementById('vins').value=='.................'){
+	 		document.getElementById('vins').value='';
+	 	}
+	 	$('#vins').addClass("clicka");
+	 }
+	 function zhikong_s(){
+		$('#vins').removeClass("clicka");	
+	 }
+	function del(e){
+		var str = document.getElementById('vins').value;
+		e = e ? e : window.event; 
+		var code = e.which ? e.which : e.keyCode;     //获取按键值
+		
+		var temp_f = "";
+		if(code == 46 || code == 8){
+			if(str.indexOf(".") < 0){
+				temp_f = str.substring(0,16)+".";
+			}else{
+				str = str.substring(0,str.indexOf(".")-1);
+				var len = str.length;
+				temp_f = str + point(len);
+			}
+			document.getElementById('vins').value = temp_f;
+		}
+	}
+	
+  	function tanqi(e) {
+		var val = document.getElementById('vins').value;
+		var val = val.replace(/\s/g,"");
+		//if(val.length>17){
+			//document.getElementById("vins").value=val.substring(0,17);
+			//return;
+	//	}
+		var sums = 17-val.length;
+		var gagaga = document.getElementById('gagaga');
+		gagaga.innerHTML='还需要输入<font color="red">'+sums+'</font>位'
+		return;
+		e = e ? e : window.event; 
+		var code = e.which ? e.which : e.keyCode;
+		
+		if(code == 37 || code == 38 || code == 39 || code == 40){
+			return;
+		}
+		if(val.indexOf(".") < 0 && code != 8 && code != 46){
+			document.getElementById("vins").value = val.substring(0,17);
+			//alert('超出win码范围');
+			return;
+		}
+		
+     	 	if(val.length>0){
+				var split_zifu=document.getElementById('vins').value.split('.');
+				
+				var kong_s='';
+				for(var l=0;l<split_zifu.length;l++){
+				 	if(split_zifu[l]!=''){
+				 		kong_s+=split_zifu[l];
+				 		
+				 	}
+					if(kong_s.length>17){
+				 			document.getElementById('vins').value=kong_s.substring(0,17);
+							//alert('超出win码范围');
+							return;
+					}else{
+						document.getElementById('vins').value=kong_s;
+					}
+				 }
+				var zifu_s=17-(document.getElementById('vins').value.length);
+      	 		var dian_s=document.getElementById('vins').value;
+     	 		for(var i=0;i<zifu_s;i++){
+     	 			dian_s+='.';
+      	 		}
+      	 		document.getElementById('vins').value=dian_s;
+      	 	}
+
+  	 }
+	
+	function point(len){
+		var point = "";
+		for(var i = 0; i < 17-len; i++){
+			point += ".";
+		}
+		
+		return point;
+	}
+	if(Array){
+		var dls=document.getElementsByName('dls');
+		for(var j=0;j<dls.length;j++){
+	if(dls[j].childNodes[1].innerHTML.length>10){
+		dls[j].style.width='212px';
+	}
+		}
+	}
+	function chaxun(){
+		var vins=document.getElementById('vins').value;
+		var vinss = vins.replace(/\s/g,"");
+		if(vinss.length<17){
+			alert('请输入17位VIN码');
+			return;
+		};
+		if(vinss=='' || vinss=='.................'){
+			alert('请输入VIN码');
+			return;
+		}
+		var reg_str=/^[A-Z0-9]*$/;
+		if (!reg_str.test(vinss))
+		{
+			alert('vin码格式为数字和大写字母组成');
+			return;
+		}
+		$.get("index.php?m=all&c=index&a=searchs&vins="+vins,function(data){
+			var data=data.replace(/(^\s*)|(\s*$)/g, '');
+			if(data=='IOQ'){
+				alert('vin码不能含有I O Q 非法字符');
+				return;
+			}else if (data=='not_all'){
+				alert('vin码第九位校验位错误');
+				return;
+			}else if(data=='jyw'){
+				alert('vin码校验错误,请检查vin码');
+				return;
+			}else if(data=='E0' || data=='E1' || data=='E2' || data=='E3' || data=='E4' || data=='E5' || data=='未查询到相关数据'){
+				window.location.href='/index.php?m=all&c=index&a=vin_displays';
+			}else{
+				var dd=eval('('+data+')');
+				if(dd['firm'] && dd['all_id_s']){
+					window.location.href='/index.php?m=all&c=index&a=vin_displays&firm='+dd['firm']+'&make_year='+dd['make_year']+'&model='+dd['model']+'&body='+dd['body']+'&drive='+dd['drive']+'&all_id_s='+dd['all_id_s'];
+				}else if(dd['firm']){
+					window.location.href='/index.php?m=all&c=index&a=vin_displays&firm='+dd['firm']+'&make_year='+dd['make_year']+'&model='+dd['model']+'&body='+dd['body']+'&drive='+dd['drive'];
+				}else if(dd['all_id_s']){
+					window.location.href='/index.php?m=all&c=index&a=vin_displays&all_id_s='+dd['all_id_s'];
+				}else{
+					alert('您的车辆没有相关信息且不在召回范围内');
+				}
+			}	
+		})
+	}
+</script>
+
+<!--[if IE6]>VIN查询结束<![endif]-->
+<!--[if IE6]>国内召回公告<![endif]-->
+
+<!--[if IE6]>国内召回公告结束<![endif]-->
+</div>
+<!--[if IE6]>右侧<![endif]-->
+<div class="ina_silde_right12">
+<div class="ina_icon ina_bt"><h3>召回公报</h3><a href="/recall/anvanced_search.html" target="_blank">召回公报搜索</a></div>
+<div class="ina_zhgb"><span class="ina_zh">召回公报</span><span class="ina_sz">所在总成</span><span class="ina_date">发布时间</span></div>
+<ul>
+<li><span class="ina_zh"><a href="/recall/20151225/recall_9607E8_1068.html" target="_blank">重庆长安汽车股份有限公司召回部分奔奔汽车</a></span><span class="ina_sz">转向系</span><span>2015-12-25</span></li>
+<li><span class="ina_zh"><a href="/recall/20151224/recall_8C4EF1_1067.html" target="_blank">现代汽车（中国）投资有限公司召回部分进口劳恩斯酷派汽车</a></span><span class="ina_sz">车身</span><span>2015-12-24</span></li>
+<li><span class="ina_zh"><a href="/recall/20151224/recall_042E43_1066.html" target="_blank">正泰基业（天津）国际贸易有限公司召回部分进口斯伯特野玛汽车</a></span><span class="ina_sz">发动机</span><span>2015-12-24</span></li>
+<li><span class="ina_zh"><a href="/recall/20151222/recall_DFFD64_1065.html" target="_blank">宝马（中国）汽车贸易有限公司召回部分进口迷你汽车</a></span><span class="ina_sz">转向系</span><span>2015-12-22</span></li>
+<li><span class="ina_zh"><a href="/recall/20151222/recall_E28E97_1064.html" target="_blank">宝马（中国）汽车贸易有限公司召回部分进口劳斯莱斯幻影汽车</a></span><span class="ina_sz">气囊和安全带</span><span>2015-12-22</span></li>
+<li><span class="ina_zh"><a href="/recall/20151218/recall_F3E4E6_1063.html" target="_blank">北京奇正汽车销售服务有限公司召回部分2015年款进口福特平行野玛2.3T汽车</a></span><span class="ina_sz">发动机</span><span>2015-12-18</span></li>
+<li><span class="ina_zh"><a href="/recall/20151218/recall_92C7A9_1062.html" target="_blank">北京美福通汽车销售服务有限公司召回部分进口谢尔比野玛2.3T汽车</a></span><span class="ina_sz">发动机</span><span>2015-12-18</span></li>
+<li><span class="ina_zh"><a href="/recall/20151214/recall_7B4173_1061.html" target="_blank">广汽三菱汽车有限公司召回部分三菱劲炫汽车</a></span><span class="ina_sz">车身</span><span>2015-12-14</span></li>
+<li><span class="ina_zh"><a href="/recall/20151214/recall_37FFDD_1060.html" target="_blank">东风汽车有限公司召回部分启辰R30汽车</a></span><span class="ina_sz">电器设备</span><span>2015-12-14</span></li>
+<li><span class="ina_zh"><a href="/recall/20151211/recall_1F089B_1059.html" target="_blank">法拉利汽车国际贸易（上海）有限公司召回部分进口488 GTB、California T汽车</a></span><span class="ina_sz">发动机</span><span>2015-12-11</span></li>
+<li><span class="ina_zh"><a href="/recall/20151211/recall_AE2AE4_1058.html" target="_blank">玛莎拉蒂（中国）汽车贸易有限公司召回GranTurismo汽车</a></span><span class="ina_sz">车身</span><span>2015-12-11</span></li>
+<li><span class="ina_zh"><a href="/recall/20151211/recall_870592_1057.html" target="_blank">马自达（中国）企业管理有限公司召回MazdaCX-5汽车</a></span><span class="ina_sz">转向系</span><span>2015-12-11</span></li>
+<li><span class="ina_zh"><a href="/recall/20151209/recall_43AFC4_1056.html" target="_blank">东风特种汽车有限公司召回部分超龙客车</a></span><span class="ina_sz">车身</span><span>2015-12-09</span></li>
+<li><span class="ina_zh"><a href="/recall/20151130/recall_20E815_1055.html" target="_blank">日野汽车（中国）有限公司召回进口牵引车</a></span><span class="ina_sz">车身</span><span>2015-11-30</span></li>
+</ul>
+<div class="ina_fanye"><a>共906条</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=0">上一页</a> <span class="span_hover">1</span> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=2">2</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=3">3</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=4">4</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=5">5</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=6">6</a> ..<a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=65">65</a> <a href="http://www.qiche365.org.cn/index.php?m=all&c=index&a=recall_list&page=2">下一页</a></div>
+</div>
+<!--[if IE6]>右侧结束<![endif]-->
+
+</div>
+<!--[if IE6]>icon<![endif]-->
+<div class="ina_icon1">
+<ul>
+<li><a href="/index.php?m=all&c=index&a=recall_list" target="_blank"><span class="ina_icon ina_gnzh"></span><br><b>国内召回公报</b></a></li>
+<li><a href="/index.php?m=all&c=index&a=auto_know&column_id=9" target="_blank"><span class="ina_icon ina_gwzh"></span><br><b>国外召回新闻</b></a></li>
+<li><a href="/index.php?m=all&c=index&a=auto_know&column_id=11" target="_blank"><span class="ina_icon ina_hyxw"></span><br><b>行业新闻</b></a></li>
+<li><a href="/index.php?m=all&c=index&a=auto_know&column_id=13" target="_blank"><span class="ina_icon ina_flfg"></span><br><b>法律法规</b></a></li>
+<li><a href="/index.php?m=all&c=index&a=auto_know&column_id=12" target="_blank"><span class="ina_icon ina_qczs"></span><br><b>汽车知识</b></a></li>
+<li><a href="/index.php?m=all&c=index&a=recall_list" target="_blank"><span class="ina_icon ina_qcjg"></span><br><b>汽车结构知识</b></a></li>
+</ul>
+</div>
+<!--[if IE6]>icon结束<![endif]-->
+<!--[if IE6]>友情链接<![endif]-->
+<div class="ina_yqlj">
+<div class="ina_yqlj_nr">
+<div class="ina_yqlj_top">
+<div class="ina_left">友情链接:</div>
+<div class="ina_right">
+<ul>
+<li><a href="http://www.aqsiq.gov.cn/">
+<img src="/static/image/flink/2013080551ff6eeb589b7.jpg">&middot;国家质检总局</a></li>
+<li><a href="http://www.dpac.gov.cn/">
+<img src="/static/image/flink/2013080551ff62f7c6cb3.jpg">&middot;缺陷产品管理中心</a></li>
+<li><a href="http://www.nhtsa.gov/">
+<img src="/static/image/flink/2013080551ff63e7dc214.jpg">&middot;美国高速公路交通安全管理局</a></li>
+<li><a href="https://www.gov.uk/government/organisations/vehicle-and-operator-services-agency">
+<img src="/static/image/flink/2013101952617b0473423.jpg">&middot;英国车辆与驾驶业务局（VOSA）</a></li>
+<li><a href="http://www.qcsanbao.cn/">
+<img src="/static/image/flink/2013122152b4f0f64b7de.jpg">&middot;中国汽车三包网</a></li>
+<li><a href="http://auto.sina.com.cn/">
+<img src="/static/image/flink/2014010852ccbff1c0348.jpg">&middot;新浪汽车</a></li>
+<li><a href="http://www.sohu.com/">
+<img src="/static/image/flink/2014031753265fe8a043a.png">&middot;搜狐网</a></li>
+<li><a href="http://auto.chinaso.com/index.html">
+<img src="/static/image/flink/2014032853353acb0877a.png">&middot;中国搜索-汽车</a></li>
+<li><a href="http://xjqcjg.xjzj.gov.cn">
+<img src="/static/image/flink/20140401533a87e37cd25.png">&middot;新疆汽车监管网</a></li>
+<li><a href="http://beijing.bitauto.com/?referrer=http://www.baidu.com/link?url=PoLpw305kf9rr3laV62ZbU2QmHmJT854PfRlAASD5pwZ9sYmtUj83">
+<img src="/static/image/flink/20140522537d5ce3948ce.png">&middot;易车网</a></li>
+<li><a href="http://www.163.com/">
+<img src="/static/image/flink/20140523537ea30052960.png">&middot;网易</a></li>
+<li><a href="http://www.cheyun.com/">
+<img src="/static/image/flink/201405285385588f96815.jpg">&middot;车云网</a></li>
+<li><a href="http://www.cheyian.com/">
+<img src="/static/image/flink/2014070253b3cddf4555d.png">&middot;车易安养车网</a></li>
+<li><a href="http://www.cheshi.com/">
+<img src="/static/image/flink/2014072253cdd5a957ce9.png">&middot;网上车市</a></li>
+<li><a href="http://www.cspress.com.cn/web/c_0000000700070002/">
+<img src="/static/image/flink/201512285680d593a803c.jpg">&middot;《产品安全与召回》杂志社</a></li>
+</ul>
+</div>
+</div>
+<div class="ina_yqlj_center"><a href="/index.html">下载中心</a>|<a href="/index.html">工作机会</a>|<a href="/index.php?m=all&c=index&a=question_list">常见问题</a>|<a href="/link/aboutrecall.html">联系我们</a>|<a href="/suggestion/suggestion.html">意见反馈</a>|<a href="/index.php?m=login&c=index&a=login">管理通道</a></div>
+<div class="ina_yqlj_bottom">
+<ul>
+<li>本网所有内容转载时请注明出处并保留本站链接</li>
+<li>电子邮箱：zhaohui@qiche365.org.cn</li>
+<li class="ina_jszc"><span>技术支持：<a href="http://www.news18a.com">网通社</a></span><a href="http://auto.news18a.com"><img src="/static/image/pic/ina_logo.png"></a></li>
+<li>京ICP备13004668号-2 京公网安备11010102001774号</li>
+</ul>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+
+<!-- <script src="/static/js/ad_code.js"></script>
+<script>document.write(ad_code);</script> -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0f747c4b8ddbafed5b4d1795915b957a' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5b3742d7672e6d4bfc6bd33c16b1a05f' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<!--[if IE6]>友情链接结束<![endif]-->
+</body>
+</html>
+
+<script type="text/javascript">
+	var alls = document.getElementById('dao_hang_recall');
+	alls.setAttribute('class','ina_dq');
+</script>
