@@ -1,4 +1,4 @@
-# Html Parser Test
+# Html Parser Test for delphi XE6
 
 This Demo use "Delphi Dom HTML Parser and Converter", the original address is:
 
