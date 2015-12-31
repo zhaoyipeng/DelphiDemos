@@ -1,6 +1,6 @@
 # Html Parser Test
 
-这个Demo使用了Delphi Dom HTML Parser and Converter，原始的源代码可以到一下地址下载：
+这个Demo使用了Delphi Dom HTML Parser and Converter，原始的源代码可以到以下地址下载：
 
 http://sourceforge.net/projects/htmlp/
 
