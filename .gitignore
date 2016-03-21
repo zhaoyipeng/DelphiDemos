@@ -5,3 +5,9 @@
 /HtmlParserTest/*.identcache
 /HtmlParserTest/HtmlParserTest.res
 /HtmlParserTest_D7/htmlp/*.dcu
+/FMXPrint/Win32/Debug
+/FMXPrint/Win64/Debug
+/FMXPrint/__history
+/FMXPrint/FMXPrintDemo.dproj.local
+/FMXPrint/FMXPrintDemo.identcache
+/FMXPrint/FMXPrintDemo.res
