@@ -17,3 +17,7 @@
 /BeautifulDialog/Win32/Debug
 /BeautifulDialog/BeautyDlgDemo.identcache
 /BeautifulDialog/BeautyDlgDemo.stat
+/TestButton/__history
+/TestButton/Win32/Debug
+/FMXPrint/*.stat
+/TestButton/*.res
