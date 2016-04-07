@@ -21,3 +21,9 @@
 /TestButton/Win32/Debug
 /FMXPrint/*.stat
 /TestButton/*.res
+/LoadCustomCursor/Debug/Win32
+/LoadCustomCursor/__history
+/TestButton/*.local
+/TestButton/*.identcache
+/TestButton/*.stat
+/LoadCustomCursor/LoadCustomCursorResource.rc
