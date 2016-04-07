@@ -27,3 +27,8 @@
 /TestButton/*.identcache
 /TestButton/*.stat
 /LoadCustomCursor/LoadCustomCursorResource.rc
+/LoadCustomCursor/LoadCustomCursor.dproj.local
+/LoadCustomCursor/LoadCustomCursor.dres
+/LoadCustomCursor/LoadCustomCursor.identcache
+/LoadCustomCursor/LoadCustomCursor.res
+/LoadCustomCursor/LoadCustomCursor.stat

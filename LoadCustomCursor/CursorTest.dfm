@@ -14,13 +14,12 @@ object LoadCursorTestForm: TLoadCursorTestForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object rzpnl1: TRzPanel
+  object pnlCanvas: TPaintBox
     Left = 70
     Top = 75
     Width = 404
     Height = 305
-    TabOrder = 0
-    OnMouseMove = rzpnl1MouseMove
-    OnPaint = rzpnl1Paint
+    OnMouseMove = pnlCanvasMouseMove
+    OnPaint = pnlCanvasPaint
   end
 end
