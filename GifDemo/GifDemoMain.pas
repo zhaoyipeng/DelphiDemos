@@ -16,8 +16,6 @@ type
     Label2: TLabel;
     edtWidth: TEdit;
     edtHeight: TEdit;
-    PaintBox1: TPaintBox;
-    Label3: TLabel;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -42,32 +40,36 @@ var
   pngFileName: string;
   s: Status;
   ClsID: TGUID;
+  w, h: Integer;
 begin
   Image := TGPImage.Create(edtFilename.Text);
   try
     edtWidth.Text := IntToStr(Image.GetWidth);
     edtHeight.Text := IntToStr(Image.GetHeight);
-    PageCount := Image.GetFrameDimensionsCount;
+    PageCount := Image.GetFrameCount(FrameDimensionTime);
+
     RowCount := (PageCount + 4) div 5;
-    PngImage := TGPBitmap.Create(Image.GetWidth * 5, Image.GetHeight * RowCount);
-    //G := TGPGraphics.Create(PngImage);
+    w := Image.GetWidth * 5;
+    h := Image.GetHeight * RowCount;
+    PngImage := TGPBitmap.Create(w, h);
+    G := TGPGraphics.Create(PngImage);
     try
       for I := 0 to PageCount-1 do
       begin
-        Image.SelectActiveFrame(FrameDimensionPage, I);
-//        G.DrawImage(Image,
-//          (I mod 5) * Image.GetWidth, (I div 5) * Image.GetHeight,
-//          Image.GetWidth, Image.GetHeight);
+        Image.SelectActiveFrame(FrameDimensionTime, I);
+        G.DrawImage(Image,
+          (I mod 5) * Image.GetWidth, (I div 5) * Image.GetHeight,
+          Image.GetWidth, Image.GetHeight);
       end;
       pngFileName := TPath.ChangeExtension(edtFilename.Text, '.png');
       if GetEncoderClsid('image/png',Clsid) >= 0 then
       begin
-        s := PngImage.Save('Test.png', ClsID);
-        label3.Caption := 'Error' + GetEnumName(TypeInfo(Status),
-                    integer(s)) ;
+        s := PngImage.Save(pngFileName, ClsID);
+//        label3.Caption := 'Error' + GetEnumName(TypeInfo(Status),
+//                    integer(s)) ;
       end;
     finally
-      //G.Free;
+      G.Free;
       PngImage.Free;
     end;
   finally

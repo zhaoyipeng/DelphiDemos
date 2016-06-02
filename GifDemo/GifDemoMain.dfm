@@ -1,9 +1,9 @@
 object Form31: TForm31
   Left = 0
   Top = 0
-  Caption = 'GifDemo'
-  ClientHeight = 537
-  ClientWidth = 804
+  Caption = 'Gif2Png Demo'
+  ClientHeight = 161
+  ClientWidth = 600
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -27,25 +27,12 @@ object Form31: TForm31
     Height = 13
     Caption = 'Height'
   end
-  object PaintBox1: TPaintBox
-    Left = 24
-    Top = 112
-    Width = 761
-    Height = 417
-  end
-  object Label3: TLabel
-    Left = 608
-    Top = 104
-    Width = 31
-    Height = 13
-    Caption = 'Label3'
-  end
   object Button1: TButton
     Left = 512
     Top = 24
     Width = 75
     Height = 25
-    Caption = 'Open'
+    Caption = 'Convert'
     TabOrder = 0
     OnClick = Button1Click
   end
