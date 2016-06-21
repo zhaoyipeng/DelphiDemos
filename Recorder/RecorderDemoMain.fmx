@@ -1,0 +1,83 @@
+object RecorderdDemoForm: TRecorderdDemoForm
+  Left = 0
+  Top = 0
+  Caption = 'Form33'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Button2: TButton
+    Action = acPlay
+    Enabled = True
+    ImageIndex = -1
+    Position.X = 280.000000000000000000
+    Position.Y = 232.000000000000000000
+    TabOrder = 5
+    Visible = True
+  end
+  object Button3: TButton
+    Action = acStop
+    Enabled = True
+    ImageIndex = -1
+    Position.X = 280.000000000000000000
+    Position.Y = 264.000000000000000000
+    TabOrder = 4
+    Visible = True
+  end
+  object Button4: TButton
+    Action = acStartRecording
+    Enabled = True
+    ImageIndex = -1
+    Position.X = 280.000000000000000000
+    Position.Y = 296.000000000000000000
+    TabOrder = 3
+    Visible = True
+  end
+  object Button5: TButton
+    Action = acStopRecording
+    Enabled = True
+    ImageIndex = -1
+    Position.X = 280.000000000000000000
+    Position.Y = 328.000000000000000000
+    TabOrder = 2
+    Visible = True
+    OnClick = Button5Click
+  end
+  object Label1: TLabel
+    Position.X = 136.000000000000000000
+    Position.Y = 136.000000000000000000
+    Text = 'Label1'
+  end
+  object Label2: TLabel
+    Position.X = 136.000000000000000000
+    Position.Y = 176.000000000000000000
+    Text = 'Label1'
+  end
+  object ActionList1: TActionList
+    OnUpdate = ActionList1Update
+    Left = 328
+    Top = 80
+    object acStartRecording: TAction
+      Text = #24320#22987#24405#38899
+      OnExecute = acStartRecordingExecute
+    end
+    object acStopRecording: TAction
+      Text = #20572#27490#24405#38899
+    end
+    object acPlay: TAction
+      Text = 'acPlay'
+      OnExecute = acPlayExecute
+    end
+    object acStop: TAction
+      Text = 'acStop'
+      OnExecute = acStopExecute
+    end
+  end
+  object MediaPlayer1: TMediaPlayer
+    Left = 112
+    Top = 248
+  end
+end

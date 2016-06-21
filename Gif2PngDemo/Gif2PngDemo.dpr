@@ -1,4 +1,4 @@
-program GifDemo;
+program Gif2PngDemo;
 
 uses
   Vcl.Forms,
