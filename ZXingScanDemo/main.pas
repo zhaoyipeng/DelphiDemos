@@ -25,7 +25,14 @@ uses
   FMX.StdCtrls, FMX.Media, FMX.Platform, FMX.MultiView, FMX.ListView.Types,
   FMX.ListView, FMX.Layouts, System.Actions, FMX.ActnList, FMX.TabControl,
   FMX.ListBox, Threading, BarcodeFormat, ReadResult,
-  FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo, ScanManager, FMX.Ani;
+  FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo, ScanManager, FMX.Ani
+  {$IFDEF ANDROID}
+  ,Androidapi.JNIBridge
+  ,System.Rtti
+  ,Androidapi.JNI.Hardware
+  ,FMX.Media.Android
+  {$ENDIF}
+  ;
 
 type
   TMainForm = class(TForm)
@@ -74,6 +81,7 @@ type
     FScanInProgress: Boolean;
     frameTake: Integer;
     procedure GetImage();
+    procedure FocusReady;
     function AppEvent(AAppEvent: TApplicationEvent; AContext: TObject): Boolean;
 
   public
@@ -89,6 +97,41 @@ implementation
 {$R *.NmXhdpiPh.fmx ANDROID}
 {$R *.LgXhdpiPh.fmx ANDROID}
 {$R *.iPhone55in.fmx IOS}
+
+type
+  TMyCamera = class(TCameraComponent)
+
+  end;
+
+{$IFDEF ANDROID}
+TAndroidCameraCallback = class(TJavaLocal, JCamera_AutoFocusCallback)
+private
+  [Weak] FMainForm: TMainForm;
+public
+  procedure onAutoFocus(success: Boolean; camera: JCamera); cdecl;
+end;
+
+procedure TAndroidCameraCallback.onAutoFocus(success: Boolean; camera: JCamera); cdecl;
+begin
+  FMainForm.FocusReady;
+end;
+
+var
+  CameraCallBack: TAndroidCameraCallback = nil;
+
+function GetCameraCallBack: TAndroidCameraCallback;
+begin
+  if CameraCallBack = nil then
+    CameraCallBack := TAndroidCameraCallback.Create;
+
+  Result := TAndroidCameraCallback.Create;
+end;
+{$ENDIF}
+
+procedure TMainForm.FocusReady;
+begin
+
+end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var
@@ -142,18 +185,42 @@ end;
 procedure TMainForm.btnStartCameraClick(Sender: TObject);
 var
   Setting: TVideoCaptureSetting;
+  {$IFDEF ANDROID}
+  JC: JCamera;
+  Device: TCaptureDevice;
+  ClassRef: TClass;
+  ctx: TRttiContext;
+  t: TRttiType;
+  {$ENDIF}
 begin
   FStartTime := Now;
   frameTake := 0;
   CameraComponent1.Active := False;
+
   Setting:= CameraComponent1.CaptureSetting;
   Setting.SetFrameRate(10, 30);
   if chkAutoFocus.IsChecked then
     CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus
   else
-    CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus;
+    CameraComponent1.FocusMode := TFocusMode.AutoFocus;
   CameraComponent1.SetCaptureSetting(Setting);
   CameraComponent1.Kind := FMX.Media.TCameraKind.BackCamera;
+
+  {$IFDEF ANDROID}
+  Device := TMyCamera(CameraComponent1).Device;
+
+  ClassRef := Device.ClassType;
+  ctx := TRttiContext.Create;
+  try
+    t := ctx.GetType(ClassRef);
+    JC := t.GetProperty('Camera').GetValue(Device).AsInterface as JCamera;
+    JC.cancelAutoFocus();
+    GetCameraCallback().FMainForm := Self;
+    JC.autoFocus(GetCameraCallback());
+  finally
+    ctx.Free;
+  end;
+  {$ENDIF}
   CameraComponent1.Active := True;
 
   lblScanStatus.Text := '';
@@ -293,4 +360,7 @@ begin
 
 end;
 
+initialization
+finalization
+  CameraCallBack.Free;
 end.
