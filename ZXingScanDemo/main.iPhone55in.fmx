@@ -1,0 +1,35 @@
+inherited MainForm_iPhone55in: TMainForm_iPhone55in
+  ClientHeight = 716
+  ClientWidth = 414
+  DesignerMasterStyle = 2
+  inherited Layout2: TLayout
+    Size.Width = 414.000000000000000000
+    Size.Height = 716.000000000000000000
+    inherited ToolBar1: TToolBar
+      Size.Width = 414.000000000000000000
+      inherited lblScanStatus: TLabel
+        Position.X = 231.000000000000000000
+      end
+      inherited btnAvailableSettings: TSpeedButton
+        Position.Y = 8.000000000000000000
+      end
+    end
+    inherited imgCamera: TImage
+      Size.Width = 414.000000000000000000
+      Size.Height = 420.000000000000000000
+    end
+    inherited Memo1: TMemo
+      Position.Y = 464.000000000000000000
+      Size.Width = 414.000000000000000000
+      Viewport.Width = 406.000000000000000000
+      Viewport.Height = 200.000000000000000000
+    end
+    inherited ToolBar3: TToolBar
+      Position.Y = 672.000000000000000000
+      Size.Width = 414.000000000000000000
+      inherited lblStatus: TLabel
+        Size.Width = 80.000000000000000000
+      end
+    end
+  end
+end

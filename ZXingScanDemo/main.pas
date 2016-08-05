@@ -57,6 +57,8 @@ type
     Rectangle5: TRectangle;
     Rectangle6: TRectangle;
     Text1: TText;
+    chkAutoFocus: TCheckBox;
+    btnAvailableSettings: TSpeedButton;
     procedure btnStartCameraClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnStopCameraClick(Sender: TObject);
@@ -64,6 +66,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure CameraComponent1SampleBufferReady(Sender: TObject;
       const ATime: TMediaTime);
+    procedure btnAvailableSettingsClick(Sender: TObject);
   private
     { Private declarations }
     FStartTime: TDateTime;
@@ -83,8 +86,11 @@ var
 implementation
 
 {$R *.fmx}
+{$R *.NmXhdpiPh.fmx ANDROID}
+{$R *.LgXhdpiPh.fmx ANDROID}
+{$R *.iPhone55in.fmx IOS}
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 var
   AppEventSvc: IFMXApplicationEventService;
 begin
@@ -116,6 +122,23 @@ begin
   FScanManager.Free;
 end;
 
+procedure TMainForm.btnAvailableSettingsClick(Sender: TObject);
+var
+  Settings: TArray<TVideoCaptureSetting>;
+  I: Integer;
+  s: string;
+begin
+  //
+  Settings := CameraComponent1.AvailableCaptureSettings;
+  for I := 0 to High(Settings) do
+  begin
+    s := Format('%d: Width=%d, Height=%d, FrameRate=%f',
+      [I+1, Settings[I].Width, Settings[I].Height,
+      Settings[I].FrameRate]);
+    Memo1.Lines.Add(s);
+  end;
+end;
+
 procedure TMainForm.btnStartCameraClick(Sender: TObject);
 var
   Setting: TVideoCaptureSetting;
@@ -123,13 +146,15 @@ begin
   FStartTime := Now;
   frameTake := 0;
   CameraComponent1.Active := False;
-  Setting:= TVideoCaptureSetting.Create;
+  Setting:= CameraComponent1.CaptureSetting;
   Setting.SetFrameRate(10, 30);
-  CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus;
+  if chkAutoFocus.IsChecked then
+    CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus
+  else
+    CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus;
   CameraComponent1.SetCaptureSetting(Setting);
   CameraComponent1.Kind := FMX.Media.TCameraKind.BackCamera;
   CameraComponent1.Active := True;
-
 
   lblScanStatus.Text := '';
   memo1.Lines.Clear;

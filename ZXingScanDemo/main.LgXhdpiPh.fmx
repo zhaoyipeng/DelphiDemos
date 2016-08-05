@@ -1,0 +1,109 @@
+inherited MainForm_LgXhdpiPh: TMainForm_LgXhdpiPh
+  ClientHeight = 695
+  ClientWidth = 450
+  DesignerMasterStyle = 2
+  inherited Layout2: TLayout
+    Size.Width = 450.000000000000000000
+    Size.Height = 695.000000000000000000
+    inherited ToolBar1: TToolBar
+      Size.Width = 450.000000000000000000
+      Size.Height = 48.000000000000000000
+      inherited btnMenu: TButton
+        Size.Width = 48.000000000000000000
+        Size.Height = 48.000000000000000000
+      end
+      inherited lblScanStatus: TLabel
+        Position.X = 250.363616943359400000
+        Size.Width = 194.636352539062500000
+        Size.Height = 47.999996185302730000
+      end
+      inherited chkAutoFocus: TCheckBox
+        Size.Height = 48.000000000000000000
+      end
+      inherited btnAvailableSettings: TSpeedButton
+        Position.Y = 8.000000000000000000
+        Size.Height = 48.000000000000000000
+      end
+    end
+    inherited imgCamera: TImage
+      Size.Width = 450.000000000000000000
+      Size.Height = 391.000000000000000000
+      inherited lytScanMask: TLayout
+        Size.Width = 450.000000000000000000
+        Size.Height = 391.000000000000000000
+        inherited Rectangle1: TRectangle
+          Size.Width = 450.000000000000000000
+          Size.Height = 100.000000000000000000
+        end
+        inherited Rectangle2: TRectangle
+          Position.Y = 100.000000000000000000
+          Size.Height = 191.000000000000000000
+        end
+        inherited Rectangle3: TRectangle
+          Position.X = 330.000000000000000000
+          Position.Y = 100.000000000000000000
+          Size.Height = 191.000000000000000000
+        end
+        inherited Rectangle4: TRectangle
+          Position.Y = 291.000000000000000000
+          Size.Width = 450.000000000000000000
+          Size.Height = 100.000000000000000000
+          inherited Text1: TText
+            Size.Width = 450.000000000000000000
+          end
+        end
+        inherited lytScanWindow: TLayout
+          Size.Width = 210.000000000000000000
+          Size.Height = 191.000000000000000000
+          inherited Line1: TLine
+            Size.Width = 210.000000000000000000
+          end
+          inherited rectTopRight: TRectangle
+            Position.X = 190.000000000000000000
+          end
+          inherited rectLeftBottom: TRectangle
+            Position.Y = 171.000000000000000000
+          end
+          inherited rectRightTop: TRectangle
+            Position.X = 202.000000000000000000
+          end
+          inherited rectRightBottom: TRectangle
+            Position.X = 202.000000000000000000
+            Position.Y = 171.000000000000000000
+          end
+          inherited Rectangle5: TRectangle
+            Position.Y = 183.000000000000000000
+          end
+          inherited Rectangle6: TRectangle
+            Position.X = 190.000000000000000000
+            Position.Y = 183.000000000000000000
+          end
+        end
+      end
+    end
+    inherited Memo1: TMemo
+      Position.Y = 439.000000000000000000
+      Size.Width = 450.000000000000000000
+      Viewport.Width = 442.000000000000000000
+      Viewport.Height = 200.000000000000000000
+    end
+    inherited ToolBar3: TToolBar
+      Position.Y = 647.000000000000000000
+      Size.Width = 450.000000000000000000
+      Size.Height = 48.000000000000000000
+      inherited btnStopCamera: TButton
+        Size.Width = 120.000000000000000000
+        Size.Height = 48.000000000000000000
+      end
+      inherited btnStartCamera: TButton
+        Position.X = 120.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 48.000000000000000000
+      end
+      inherited lblStatus: TLabel
+        Size.Width = 210.000000000000000000
+        Size.Height = 48.000000000000000000
+      end
+    end
+  end
+end

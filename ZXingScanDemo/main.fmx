@@ -44,6 +44,23 @@ object MainForm: TMainForm
         TextSettings.HorzAlign = Trailing
         Text = 'ScanStatus'
       end
+      object chkAutoFocus: TCheckBox
+        Align = Left
+        IsChecked = True
+        Size.Width = 120.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        Text = #33258#21160#32858#28966
+      end
+      object btnAvailableSettings: TSpeedButton
+        Position.X = 136.000000000000000000
+        Size.Width = 161.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        Text = #35774#32622#21015#34920
+        OnClick = btnAvailableSettingsClick
+      end
     end
     object imgCamera: TImage
       MultiResBitmap = <
