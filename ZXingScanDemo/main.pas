@@ -31,6 +31,7 @@ uses
   ,System.Rtti
   ,Androidapi.JNI.Hardware
   ,FMX.Media.Android
+  ,CameraConfigurationUtils
   {$ENDIF}
   ;
 
@@ -175,9 +176,9 @@ begin
   Settings := CameraComponent1.AvailableCaptureSettings;
   for I := 0 to High(Settings) do
   begin
-    s := Format('%d: Width=%d, Height=%d, FrameRate=%f',
+    s := Format('%d: Width=%d, Height=%d, FrameRate=%f, Min=%f, Max=%f',
       [I+1, Settings[I].Width, Settings[I].Height,
-      Settings[I].FrameRate]);
+      Settings[I].FrameRate, Settings[I].MinFrameRate, Settings[I].MaxFrameRate]);
     Memo1.Lines.Add(s);
   end;
 end;
@@ -191,6 +192,7 @@ var
   ClassRef: TClass;
   ctx: TRttiContext;
   t: TRttiType;
+  Params: JCamera_Parameters;
   {$ENDIF}
 begin
   FStartTime := Now;
@@ -198,12 +200,16 @@ begin
   CameraComponent1.Active := False;
 
   Setting:= CameraComponent1.CaptureSetting;
-  Setting.SetFrameRate(10, 30);
+  Setting.Width := 352;
+  Setting.Height := 288;
+  Setting.FrameRate := 30;
+  Setting.SetFrameRate(30, 30);
   if chkAutoFocus.IsChecked then
     CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus
   else
     CameraComponent1.FocusMode := TFocusMode.AutoFocus;
   CameraComponent1.SetCaptureSetting(Setting);
+  CameraComponent1.Quality := TVideoCaptureQuality.MediumQuality;
   CameraComponent1.Kind := FMX.Media.TCameraKind.BackCamera;
 
   {$IFDEF ANDROID}
@@ -214,9 +220,11 @@ begin
   try
     t := ctx.GetType(ClassRef);
     JC := t.GetProperty('Camera').GetValue(Device).AsInterface as JCamera;
-    JC.cancelAutoFocus();
-    GetCameraCallback().FMainForm := Self;
-    JC.autoFocus(GetCameraCallback());
+    TCameraConfigurationUtils.setBarcodeSceneMode(JC.getParameters);
+    TCameraConfigurationUtils.setVideoStabilization(JC.getParameters);
+    //JC.cancelAutoFocus();
+    //GetCameraCallback().FMainForm := Self;
+    //JC.autoFocus(GetCameraCallback());
   finally
     ctx.Free;
   end;
@@ -362,5 +370,5 @@ end;
 
 initialization
 finalization
-  CameraCallBack.Free;
+  //CameraCallBack.Free;
 end.
