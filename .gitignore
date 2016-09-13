@@ -32,6 +32,9 @@
 /LoadCustomCursor/LoadCustomCursor.identcache
 /LoadCustomCursor/LoadCustomCursor.res
 /LoadCustomCursor/LoadCustomCursor.stat
+/ZXingScanDemo/__history
+/ZXingScanDemo/ZXingScanDemo.dproj.local
+/ZXingScanDemo/ZXingScanDemo.identcache
 /GifDemo/__history
 /GifDemo/Win32/Debug
 /Gif2PngDemo/__history
@@ -41,3 +44,6 @@
 /Gif2PngDemo/Gif2PngDemo.identcache
 /Gif2PngDemo/Win32/Debug
 /Gif2PngDemo/Win32/Release
+/ZXingScanDemo/Android/Debug
+/ZXingScanDemo/Win32/Debug
+/CameraPerformance/__history

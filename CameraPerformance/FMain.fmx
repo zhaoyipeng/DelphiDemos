@@ -1,0 +1,108 @@
+object FormMain: TFormMain
+  Left = 0
+  Top = 0
+  Caption = 'Camera Performance'
+  ClientHeight = 480
+  ClientWidth = 320
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object ToolBar: TToolBar
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    Size.Width = 320.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object ButtonSwitchCamera: TButton
+      Align = Right
+      Images = ImageList
+      ImageIndex = 0
+      Margins.Left = 8.000000000000000000
+      Position.X = 268.000000000000000000
+      Size.Width = 44.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toolbutton'
+      TabOrder = 0
+      OnClick = ButtonSwitchCameraClick
+    end
+    object LayoutSetting: TLayout
+      Align = Client
+      Size.Width = 175.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object PopupBoxSetting: TPopupBox
+        Align = VertCenter
+        Position.Y = 8.000000000000000000
+        Size.Width = 175.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = PopupBoxSettingChange
+      end
+    end
+    object LabelSetting: TLabel
+      Align = Left
+      HitTest = True
+      Position.X = 8.000000000000000000
+      Size.Width = 77.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toollabel'
+      Text = 'Setting'
+    end
+  end
+  object StatusBar: TStatusBar
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    Position.Y = 458.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 320.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object LabelFPS: TLabel
+      Align = Client
+      Size.Width = 304.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object PaintBox: TPaintBox
+    Align = Client
+    Size.Width = 320.000000000000000000
+    Size.Height = 391.000000000000000000
+    Size.PlatformDefault = False
+    OnPaint = PaintBoxPaint
+  end
+  object CheckBoxDisplay: TCheckBox
+    Align = Top
+    IsChecked = True
+    Margins.Left = 8.000000000000000000
+    Position.X = 8.000000000000000000
+    Position.Y = 48.000000000000000000
+    Size.Width = 312.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Display'
+    OnChange = CheckBoxDisplayChange
+  end
+  object CameraComponent: TCameraComponent
+    Kind = FrontCamera
+    OnSampleBufferReady = CameraComponentSampleBufferReady
+    Left = 156
+    Top = 112
+  end
+  object ImageList: TImageList
+    Source = <>
+    Destination = <>
+    Left = 60
+    Top = 112
+  end
+end
