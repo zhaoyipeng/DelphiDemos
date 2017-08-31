@@ -1,0 +1,262 @@
+object QMScanCodeForm: TQMScanCodeForm
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 562
+  ClientWidth = 401
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnClose = FormClose
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object CameraComponent1: TCameraComponent
+    Kind = BackCamera
+    OnSampleBufferReady = CameraComponent1SampleBufferReady
+    Left = 160
+    Top = 96
+  end
+  object pbCamera: TPaintBox
+    Align = Contents
+    Size.Width = 401.000000000000000000
+    Size.Height = 562.000000000000000000
+    Size.PlatformDefault = False
+    OnPaint = pbCameraPaint
+    object lytScanMask: TLayout
+      Align = Client
+      Size.Width = 401.000000000000000000
+      Size.Height = 562.000000000000000000
+      Size.PlatformDefault = False
+      OnResize = lytScanMaskResize
+      object rectTop: TRectangle
+        Align = Top
+        Fill.Color = x80000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 130.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+      end
+      object rectLeft: TRectangle
+        Align = Left
+        Fill.Color = x80000000
+        Position.Y = 130.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 302.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+      end
+      object rectRight: TRectangle
+        Align = Right
+        Fill.Color = x80000000
+        Position.X = 281.000000000000000000
+        Position.Y = 130.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 302.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+      end
+      object rectBottom: TRectangle
+        Align = Bottom
+        Fill.Color = x80000000
+        Position.Y = 432.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 130.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        object Text1: TText
+          Align = Top
+          Margins.Top = 10.000000000000000000
+          Position.Y = 10.000000000000000000
+          Size.Width = 401.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          Text = #23558#20108#32500#30721#25918#20837#26694#20869#65292#21363#21487#33258#21160#25195#25551
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.VertAlign = Leading
+        end
+      end
+      object lytScanWindow: TRectangle
+        Align = Client
+        Fill.Kind = None
+        Size.Width = 161.000000000000000000
+        Size.Height = 302.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claWhite
+        object rectIndicator: TRectangle
+          Fill.Kind = Gradient
+          Fill.Gradient.Points = <
+            item
+              Color = claWhite
+              Offset = 0.000000000000000000
+            end
+            item
+              Color = claBlue
+              Offset = 0.180124223232269300
+            end
+            item
+              Color = claBlue
+              Offset = 0.493788808584213300
+            end
+            item
+              Color = claBlue
+              Offset = 0.807453393936157200
+            end
+            item
+              Color = claWhite
+              Offset = 1.000000000000000000
+            end>
+          Fill.Gradient.StartPosition.X = 1.000000000000000000
+          Fill.Gradient.StartPosition.Y = 0.499999970197677600
+          Fill.Gradient.StopPosition.Y = 0.500000059604644800
+          Position.X = 10.000000000000000000
+          Position.Y = 20.000000000000000000
+          Size.Width = 120.000000000000000000
+          Size.Height = 2.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          Stroke.Thickness = 2.000000000000000000
+          object FloatAnimation1: TFloatAnimation
+            Enabled = True
+            Duration = 2.000000000000000000
+            Loop = True
+            PropertyName = 'Position.Y'
+            StartValue = 0.000000000000000000
+            StopValue = 0.000000000000000000
+          end
+        end
+        object rectLefTop: TRectangle
+          Fill.Color = claWhite
+          Size.Width = 8.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object rectTopRight: TRectangle
+          Anchors = [akTop, akRight]
+          Fill.Color = claWhite
+          Position.X = 141.000000000000000000
+          Size.Width = 20.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object rectLeftBottom: TRectangle
+          Anchors = [akLeft, akBottom]
+          Fill.Color = claWhite
+          Position.Y = 282.000000000000000000
+          Size.Width = 8.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object rectRightTop: TRectangle
+          Anchors = [akTop, akRight]
+          Fill.Color = claWhite
+          Position.X = 153.000000000000000000
+          Size.Width = 8.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object rectTopLeft: TRectangle
+          Fill.Color = claWhite
+          Size.Width = 20.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object rectRightBottom: TRectangle
+          Anchors = [akRight, akBottom]
+          Fill.Color = claWhite
+          Position.X = 153.000000000000000000
+          Position.Y = 282.000000000000000000
+          Size.Width = 8.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object Rectangle5: TRectangle
+          Anchors = [akLeft, akBottom]
+          Fill.Color = claWhite
+          Position.Y = 294.000000000000000000
+          Size.Width = 20.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+        object Rectangle6: TRectangle
+          Anchors = [akRight, akBottom]
+          Fill.Color = claWhite
+          Position.X = 141.000000000000000000
+          Position.Y = 294.000000000000000000
+          Size.Width = 20.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+      end
+    end
+  end
+  object Layout1: TRectangle
+    Align = Top
+    Fill.Color = x80000000
+    Size.Width = 401.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object btnBack: TSpeedButton
+      Align = Left
+      ModalResult = 2
+      Margins.Left = 10.000000000000000000
+      Position.X = 10.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'backtoolbutton'
+      Text = #36820#22238
+      TouchTargetExpansion.Left = 10.000000000000000000
+    end
+  end
+  object Rectangle1: TRectangle
+    Align = Bottom
+    Fill.Color = x80000000
+    Position.Y = 514.000000000000000000
+    Size.Width = 401.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object LabelFPS: TLabel
+      Align = Client
+      StyledSettings = [Family, Size, Style]
+      Size.Width = 152.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.FontColor = claWhite
+      Text = 'LabelFPS'
+    end
+    object lblResult: TLabel
+      Align = Right
+      StyledSettings = [Family, Size, Style]
+      Position.X = 152.000000000000000000
+      Size.Width = 249.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.FontColor = claWhite
+    end
+  end
+  object MediaPlayer1: TMediaPlayer
+    Left = 344
+    Top = 264
+  end
+  object ActionList1: TActionList
+    Left = 184
+    Top = 264
+    object TakePhotoFromLibraryAction1: TTakePhotoFromLibraryAction
+      Category = 'Media Library'
+    end
+  end
+end
