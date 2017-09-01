@@ -2,3 +2,5 @@
 
 ZXing.Delphi项目地址：
 https://github.com/Spelt/ZXing.Delphi
+ 
+支持Berlin版本，如果SIMD版本出现问题，选择Fast版本，其他问题可到QQ群咨询，群号：165232328
