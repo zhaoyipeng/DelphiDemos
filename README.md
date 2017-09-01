@@ -6,7 +6,7 @@ ZXingScanDemo 是使用ZXing.Delphi扫描的一个demo，与原有的demo相比�
 ScanCodeDemo 相比ZXingScanDemo，对相机的聚焦（安卓）和性能进行了优化
 
 
-![捐助名单](DonationList.md) 
+[捐助名单](DonationList.md) 
 
 
 #关于捐助：
