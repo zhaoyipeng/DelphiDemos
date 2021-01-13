@@ -14,3 +14,9 @@ ScanCodeDemo 相比ZXingScanDemo，对相机的聚焦（安卓）和性能进行
 本项目所有示例均可免费下载和使用，无需通知我，
 如果你觉得本项目的示例对你有所帮助而你刚好又想对本项目进行捐助,请联系作者：QQ 21114963
 
+
+# Site Links
+	
+## [learndelphi](//learndelphi.org)
+
+## [embarcadero](//embarcadero.com)
